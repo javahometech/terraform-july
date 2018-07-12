@@ -36,10 +36,19 @@ variable "cidr_webservers" {
   default = ["192.50.1.0/24", "192.50.2.0/24"]
 }
 
-variable "webservers_azs" {
-  default = ["ap-south-1a", "ap-south-1b"]
-}
+# Declare the data source
+data "aws_availability_zones" "azs" {}
 
 variable "public_subnets_count" {
   default = "2"
+}
+
+# Variables for RDS and private subnets
+variable "db_sub_count" {
+  default = "2"
+}
+
+variable "cidr_rds" {
+  type    = "list"
+  default = ["192.50.3.0/24", "192.50.4.0/24"]
 }
