@@ -9,10 +9,6 @@ variable "subnet_cidr" {
   default = ["10.20.1.0/24", "10.20.2.0/24", "10.20.3.0/24"]
 }
 
-variable "ec2_ami" {
-  default = "ami-5a8da735"
-}
-
 variable "ec2_instance_type" {
   default = "t2.micro"
 }
@@ -51,4 +47,12 @@ variable "db_sub_count" {
 variable "cidr_rds" {
   type    = "list"
   default = ["192.50.3.0/24", "192.50.4.0/24"]
+}
+
+variable "web_ami" {
+  default = "ami-5a8da735"
+}
+
+variable "web_servers_count" {
+  default = "2"
 }
