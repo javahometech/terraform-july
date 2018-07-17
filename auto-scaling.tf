@@ -9,16 +9,28 @@ resource "aws_autoscaling_group" "JobAssistASG" {
   load_balancers            = ["${aws_elb.my_vpc_elb.name}"]
   force_delete              = true
   vpc_zone_identifier       = ["${aws_subnet.webservers.*.id}"]
-  launch_configuration      = "${aws_launch_configuration.JobAssistLC.name}"
+  launch_configuration      = "${aws_launch_configuration.JobAssistLC-1.name}"
 }
 
-resource "aws_launch_configuration" "JobAssistLC" {
-  name            = "JobAssistLC"
-  image_id        = "${var.web_ami}"
-  instance_type   = "${var.ec2_instance_type}"
-  key_name        = "${var.ec2_keyname}"
-  user_data       = "${file("./scripts/setup_apache.sh")}"
-  security_groups = ["${aws_security_group.web_sg.id}"]
+# resource "aws_launch_configuration" "JobAssistLC" {
+#   name            = "JobAssistLC"
+#   image_id        = "${var.web_ami}"
+#   instance_type   = "${var.ec2_instance_type}"
+#   key_name        = "${var.ec2_keyname}"
+#   user_data       = "${file("./scripts/setup_apache.sh")}"
+#   security_groups = ["${aws_security_group.web_sg.id}"]
+#
+#   # iam_instance_profile = "${aws_iam_instance_profile.test_profile.name}"
+# }
+
+resource "aws_launch_configuration" "JobAssistLC-1" {
+  name                 = "JobAssistLC-1"
+  image_id             = "${var.web_ami}"
+  instance_type        = "${var.ec2_instance_type}"
+  key_name             = "${var.ec2_keyname}"
+  user_data            = "${file("./scripts/setup_apache.sh")}"
+  security_groups      = ["${aws_security_group.web_sg.id}"]
+  iam_instance_profile = "${aws_iam_instance_profile.test_profile.name}"
 }
 
 resource "aws_autoscaling_policy" "AddInstancesPolicy" {
