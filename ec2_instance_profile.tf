@@ -16,6 +16,6 @@ resource "aws_iam_policy_attachment" "test-attach" {
 }
 
 resource "aws_iam_instance_profile" "test_profile" {
-  name  = "test_profile"
-  roles = ["${aws_iam_role.test.name}"]
+  name = "test_profile"
+  role = "${aws_iam_role.test.name}"
 }
