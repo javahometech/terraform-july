@@ -1,7 +1,16 @@
 variable "region" {
   type        = "string"
   description = "Choose the region"
-  default     = "ap-south-1"
+  default     = "us-east-1"
+}
+
+variable "web_ami" {
+  type = "map"
+
+  default = {
+    ap-south-1 = "ami-5a8da735"
+    us-east-1  = "ami-cfe4b2b0"
+  }
 }
 
 variable "subnet_cidr" {
@@ -47,10 +56,6 @@ variable "db_sub_count" {
 variable "cidr_rds" {
   type    = "list"
   default = ["192.50.3.0/24", "192.50.4.0/24"]
-}
-
-variable "web_ami" {
-  default = "ami-5a8da735"
 }
 
 variable "web_servers_count" {

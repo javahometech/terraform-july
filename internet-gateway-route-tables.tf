@@ -7,7 +7,8 @@ resource "aws_internet_gateway" "igw" {
 }
 
 resource "aws_route_table" "webservers_rt" {
-  vpc_id = "${aws_vpc.main_vpc.id}"
+  vpc_id     = "${aws_vpc.main_vpc.id}"
+  depends_on = ["aws_subnet.webservers"]
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -29,7 +30,8 @@ resource "aws_route_table_association" "webservers" {
 # Create Private Route Table
 
 resource "aws_route_table" "rds_rt" {
-  vpc_id = "${aws_vpc.main_vpc.id}"
+  vpc_id     = "${aws_vpc.main_vpc.id}"
+  depends_on = ["aws_subnet.rds"]
 
   tags {
     Name = "rds_rt"
@@ -40,7 +42,8 @@ resource "aws_route_table_association" "rds" {
   count          = "${length(aws_subnet.rds.*.id)}"
   subnet_id      = "${aws_subnet.rds.*.id[count.index]}"
   route_table_id = "${aws_route_table.rds_rt.id}"
-  depends_on     = ["aws_subnet.rds"]
+
+  # depends_on     = ["aws_subnet.rds"]
 }
 
 # Terraform Import Demo
